@@ -1,11 +1,22 @@
 package pl.sainer.radoslawrzymowski.powiat;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.app.Activity;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.ArrayAdapter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends Activity {
 
@@ -13,9 +24,36 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        WebView myWebView = (WebView) findViewById(R.id.webview);
-        myWebView.setWebViewClient(new WebViewClient());
-        myWebView.loadUrl("http://zuromin-powiat.home.pl/app_powiat");
+        final ListView mylist=(ListView) findViewById(R.id.Lista);
+        List<String> list = new ArrayList<String>();
+        Button baton  = (Button) findViewById(R.id.button);
+        final EditText edit = (EditText) findViewById(R.id.editText);
+        list.add("hello");
+        final ArrayList arrayList = new ArrayList<String>();
+        arrayList.add("hello");
+        arrayList.add("hello1");
+
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList);
+
+        mylist.setAdapter(adapter);
+
+        edit.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                arrayList.add(edit.getText());
+                adapter.notifyDataSetChanged();
+                return false;
+            }
+        });
+        baton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arrayList.add(edit.getText());
+                adapter.notifyDataSetChanged();
+
+            }
+        });
     }
 
     @Override
